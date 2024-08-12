@@ -1,0 +1,37 @@
+<!--
+    FEITO
+        -Modelagem das classes e do banco
+    PARA FAZER - 
+        - 12/08 ## Fazer login e cadastro funcionar
+        - 13/08 ## Fazer uma homepage com todos os eventos disponiveis e links para iniciar sessao
+        - 14/08 ## Pensar sobre as permissoes de cada tipo de usuario (definir classe adkmin para cadastrar eventos)
+        - 15/08 ## Eventos funcionando e edicao de dados de usuario e de eventos
+
+
+-->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    
+    <header><h1>Gerenciador de Eventos</h1></header>
+    
+    <form action="Service/login.php" method="post">
+        <div>
+            <h2>Login</h2>
+            <p>Email</p><input type="text" name="email" id="email" required>
+            <p>Senha</p><input type="text" name="senha" id="senha" required><br><br>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+    <div>
+            <p>Ainda não possui uma conta?</p>
+            <button onclick="window.location.href='Pages/cadastro.html'">Cadastre-se</button>
+    </div>
+    <footer><p>Projeto prático SIN 132</p></footer>
+</body>
+</html>
