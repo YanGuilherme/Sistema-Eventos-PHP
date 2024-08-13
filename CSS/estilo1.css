@@ -1,0 +1,110 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+ 
+}
+h1{
+    text-align: center;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    z-index: 1000; 
+}
+
+.error{
+    color: red;
+}
+
+/* color: black;
+background-color: aliceblue;
+font-size: large;
+margin :7px;
+padding: 6px;
+border-radius: 5px;
+text-decoration: none; */
+
+nav a{
+
+
+    display: inline-block;
+    padding: 8px 16px; 
+    font-size: 12px; 
+    font-weight: bold; 
+    color: #fff; 
+    background: linear-gradient(45deg, #3c51ad, #c2b9eb); 
+    border: none;
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    text-align: center; 
+    text-decoration: none; 
+    transition: all 0.3s ease; 
+    
+}
+
+nav a:hover{
+    background: linear-gradient(45deg, #1e28b1, #8c92e9); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
+    transform: translateY(-2px); 
+}
+
+nav a:active{
+    background: linear-gradient(45deg, #1a1c96, #696beb);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transform: translateY(0);
+
+}
+
+nav a:disabled{
+    background: #d5d5d5; 
+    color: #a8a8a8; 
+    cursor: not-allowed; 
+    box-shadow: none; 
+
+}
+
+
+
+button {
+    display: inline-block;
+    padding: 8px 16px; 
+    font-size: 12px; 
+    font-weight: bold; 
+    color: #fff; 
+    background: linear-gradient(45deg, #3c51ad, #c2b9eb); 
+    border: none;
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    text-align: center; 
+    text-decoration: none; 
+    transition: all 0.3s ease; 
+}
+
+
+button:hover {
+    background: linear-gradient(45deg, #1e28b1, #8c92e9); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
+    transform: translateY(-2px); 
+}
+
+
+button:active {
+    background: linear-gradient(45deg, #1a1c96, #696beb);
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transform: translateY(0);
+}
+
+
+button:disabled {
+    background: #d5d5d5; 
+    color: #a8a8a8; 
+    cursor: not-allowed; 
+    box-shadow: none; 
+}
