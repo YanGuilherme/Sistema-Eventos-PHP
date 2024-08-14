@@ -16,7 +16,7 @@ class Curso{
 
         $sql = "SELECT * FROM cursos WHERE evento_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $eventoId); 
+        $stmt->bind_param("i", $eventoId);
 
         $stmt->execute();
         $result = $stmt->get_result();

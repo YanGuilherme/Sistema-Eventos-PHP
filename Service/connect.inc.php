@@ -1,7 +1,4 @@
 <?php 
-
-
-
 function getConnection(){
     $host = "localhost";
     $db_name = "EventControlDB";
@@ -17,5 +14,4 @@ function getConnection(){
     }
     return $conn;
 }
-
 ?>

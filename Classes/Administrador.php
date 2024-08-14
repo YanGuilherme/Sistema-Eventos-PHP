@@ -6,8 +6,8 @@ include 'Evento.php';
 
 include_once 'Usuario.php';
 
-include_once '../Service/connect.inc.php';
-class Administrador extends Usuario{
+require_once '/opt/lampp/htdocs/REPOSITORIO-Sistema-Eventos-PHP/Service/connect.inc.php';
+class Administrador{
 
     public static function cadastrarEvento($evento) {
         $conn = getConnection();

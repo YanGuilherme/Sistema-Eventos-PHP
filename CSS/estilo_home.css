@@ -1,0 +1,53 @@
+.evento {
+    text-align: center;
+    background-color: azure;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 8px;
+    margin-bottom: 10px; /* Adicionei um espaçamento entre os eventos */
+    flex-wrap: wrap;
+    
+}
+
+input{
+    font-size: large;
+    width: 100%;
+    text-align: center;
+}
+
+.wrapper{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 5px;
+    flex-wrap: wrap;
+}
+
+.evento h3 {
+    font-size: larger;
+    background-color: rgb(214, 236, 255);
+}
+
+.cursos {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha, se necessário */
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.curso {
+    background-color: rgb(220, 198, 255);
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 5px;
+    flex: 1 1 calc(33.33% - 40px); /* Define a largura dos cards e permite ajuste */
+    box-sizing: border-box; /* Garante que o padding e border sejam incluídos na largura */
+    max-width: 300px; /* Define um limite máximo para a largura dos cards */
+}
+
+h2 {
+    font-size: 20pt;
+    text-align: center;
+    background-color: #ccc;
+}

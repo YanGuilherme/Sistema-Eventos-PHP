@@ -1,0 +1,45 @@
+.main-container {
+    display: flex;
+    justify-content:center;
+    align-items: flex-start;
+}
+
+.form-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1200px;
+    gap: 20px;
+}
+
+.form-item {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.form-item h2 {
+    margin-bottom: 15px;
+}
+
+.form-item form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-item form input,
+.form-item form textarea,
+.form-item form select,
+.form-item form button {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+h2{
+    text-align: center;
+    background-color: #ccc;
+}

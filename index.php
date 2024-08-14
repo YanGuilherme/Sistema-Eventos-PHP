@@ -5,13 +5,13 @@
         -  ## Fazer login e cadastro funcionar
         -  ## Mudar para php para alternar botoes do nav
         -  ## Mudar todo o fluxo de paginas para login -> e entao depois pagina principal com acessos
+        -  ## Pensar sobre as permissoes de cada tipo de usuario (definir classe adkmin para cadastrar eventos)
 
 
 
 
     PARA FAZER - 
-        - 13/08 ## Pensar sobre as permissoes de cada tipo de usuario (definir classe adkmin para cadastrar eventos)
-        - 13/08 ## Eventos funcionando e edicao de dados de usuario e de eventos
+        - 14/08 ## Eventos funcionando e edicao de dados de usuario e de eventos
 
 
 -->

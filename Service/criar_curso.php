@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include '../Classes/Administrador.php';
+include_once '../Classes/Administrador.php';
 include_once '../Classes/Curso.php';
 
 $usuarioLogado = isset($_SESSION['user']) && is_array($_SESSION['user']);

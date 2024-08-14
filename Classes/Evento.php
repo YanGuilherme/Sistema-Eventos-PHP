@@ -1,6 +1,6 @@
 <?php
 
-include_once '../Service/connect.inc.php';
+require_once '/opt/lampp/htdocs/REPOSITORIO-Sistema-Eventos-PHP/Service/connect.inc.php';
 class Evento{
     private $id;
     private $titulo;
