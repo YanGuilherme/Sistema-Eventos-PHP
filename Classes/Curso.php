@@ -38,6 +38,18 @@ class Curso{
 
         return $cursos;
     }
+
+
+    public static function buscarCursoById($id){
+        $conn = getConnection();
+        $sql = "SELECT * FROM cursos WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_object();
+        
+    }
     function verificarConflitoHorario(){}
 
         // Construtor da classe

@@ -36,6 +36,17 @@ class Evento{
         return $eventos;
 
     }
+
+    public static function buscarEventoById($id){
+        $conn = getConnection();
+        $sql = "SELECT * FROM eventos WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_object();
+        
+    }
     function obterDetalhesEvento(){}
 
     public function __construct($id = null, $titulo = '', $descricao = '', $dataInicio = '', $dataFim = '') {

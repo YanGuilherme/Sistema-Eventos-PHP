@@ -76,11 +76,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         ?>
             <div class="evento">
                 <h3><?php echo htmlspecialchars($evento->getTitulo()); ?></h3>
-                <p><strong>Descrição:</strong> <?php echo htmlspecialchars($evento->getDescricao()); ?></p>
+                <p><strong style="word-break: break-word;">Descrição:</strong> <?php echo htmlspecialchars($evento->getDescricao()); ?></p>
                 <p><strong>Data de Início:</strong> <?php echo htmlspecialchars($evento->getDataInicio()); ?></p>
                 <p><strong>Data de Fim:</strong> <?php echo htmlspecialchars($evento->getDataFim()); ?></p>
                 <?php if($tipoUsuario === 'administrador'):?>
-                <form action="../Service/editar_evento" method="post">
+                <form action="./editar_evento.php" method="post">
                     <input type="hidden" name="id_evento" value="<?php echo htmlspecialchars($evento->getId()); ?>">
                     <button type="submit">Editar evento</button>
                 </form><br>
@@ -102,7 +102,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                                 <p><strong>Data:</strong> <?php echo htmlspecialchars($curso->getData()); ?></p>
                                 <p><strong>Horário:</strong> <?php echo htmlspecialchars($curso->getHorario()); ?></p>
                                 <?php if($tipoUsuario === 'administrador'):?>
-                                    <form action="../Service/editar_curso" method="post">
+                                    <form action="./editar_curso.php" method="post">
                                         <input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($curso->getId()); ?>">
                                         <button type="submit">Editar curso</button>
                                     </form><br>
@@ -112,7 +112,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                                     </form>
 
                                     <?php else: ?>
-                                        <form action="../Pages/inscricao.php" method="post">
+                                        <form action="./inscricao.php" method="post">
                                         <input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($curso->getId()); ?>">
                                         <input type="hidden" name="id_user" value="<?php echo htmlspecialchars($_SESSION['user']['id']); ?>">
                                         <button type="submit">Inscrever-se no curso</button>

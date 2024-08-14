@@ -77,11 +77,85 @@ class Administrador{
 
 
 
-    function editarEvento(){}
+    public static function editarEvento($idEvento, $titulo, $descricao, $dataInicio, $dataFim){
+        if (!$idEvento) {
+            return "ID do evento não fornecido.";
+        }
+        $conn = getConnection();
+    
+        // Verifica se o evento existe
+        $sql = "SELECT * FROM eventos WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idEvento);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows == 0) {
+            $stmt->close();
+            $conn->close();
+            return "Evento não encontrado.";
+        }
+    
+        $stmt->close();
+    
+        // Atualiza os dados do usuário
+        $sql = "UPDATE eventos SET titulo = ?, descricao = ?, data_inicio = ?, data_fim = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssi", $titulo, $descricao,$dataInicio,$dataFim, $idEvento);
+    
+        if ($stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            return "Evento atualizado com sucesso.";
+        } else {
+            $stmt->close();
+            $conn->close();
+            return "Erro ao atualizar evento: " . $conn->error;
+        }
+    }
 
 
 
-    function editarCurso(){}
+    public static function editarCurso($cursoId, $titulo, $descricao, $data, $horario, $eventoId){
+
+        echo $cursoId;
+
+        if (!$cursoId) {
+            return "ID do curso não fornecido. aq??";
+        }
+        $conn = getConnection();
+    
+        // Verifica se o curso existe
+        $sql = "SELECT * FROM cursos WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $cursoId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows == 0) {
+            $stmt->close();
+            $conn->close();
+            return "Curso não encontrado.";
+        }
+    
+        $stmt->close();
+    
+        // Atualiza os dados do curso
+        $sql = "UPDATE cursos SET evento_id = ?, titulo = ?, descricao = ?, data = ?, horario = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("issssi", $eventoId, $titulo, $descricao, $data, $horario, $cursoId);
+    
+        if ($stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            return "Curso atualizado com sucesso.";
+        } else {
+            $stmt->close();
+            $conn->close();
+            return "Erro ao atualizar curso: " . $conn->error;
+        }
+    }
+
     function gerarRelatorios(){}
     function gerenciarRanking(){}
     

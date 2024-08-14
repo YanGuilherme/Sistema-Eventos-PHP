@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <a href="login.php">Logar</a>
             <a href="cadastro.php">Fazer cadastro</a>
         <?php endif; ?>
-    </nav><br>
+    </nav>
 
     <h2>Alterar dados do usuário</h2>
     <h3>Dados pessoais</h3>
@@ -112,6 +112,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="password" name="senha" id="senha"><br><br>
         <button type="submit">Editar perfil</button>
     </form>
-    <footer><p>Projeto prático SIN 132</p></footer>
 </body>
 </html>
