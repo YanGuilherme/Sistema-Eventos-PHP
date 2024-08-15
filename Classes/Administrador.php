@@ -70,13 +70,6 @@ class Administrador{
             return "Erro ao cadastrar o curso: " . $conn->error;
         }
     }
-
-
-
-
-
-
-
     public static function editarEvento($idEvento, $titulo, $descricao, $dataInicio, $dataFim){
         if (!$idEvento) {
             return "ID do evento não fornecido.";
@@ -113,8 +106,6 @@ class Administrador{
             return "Erro ao atualizar evento: " . $conn->error;
         }
     }
-
-
 
     public static function editarCurso($cursoId, $titulo, $descricao, $data, $horario, $eventoId){
 
@@ -156,6 +147,57 @@ class Administrador{
         }
     }
 
+    public static function excluirCurso($idCurso){
+        $conn = getConnection();
+
+        $sqlCursos = "DELETE FROM cursos WHERE id = ?";
+        $stmtCursos = $conn->prepare($sqlCursos);
+        $stmtCursos->bind_param("i", $idCurso);
+        $stmtCursos->execute();
+        $stmtCursos->close();
+
+    }
+
+    public static function excluirEvento($idEvento) {
+        // Conexão com o banco de dados
+        $conn = getConnection();
+        
+        // Iniciar uma transação para garantir que ambas as operações ocorram ou nenhuma
+        $conn->begin_transaction();
+    
+        try {
+            // Excluir os cursos associados ao evento
+            $sqlCursos = "DELETE FROM cursos WHERE evento_id = ?";
+            $stmtCursos = $conn->prepare($sqlCursos);
+            $stmtCursos->bind_param("i", $idEvento);
+            $stmtCursos->execute();
+            $stmtCursos->close();
+    
+            // Excluir o evento
+            $sqlEvento = "DELETE FROM eventos WHERE id = ?";
+            $stmtEvento = $conn->prepare($sqlEvento);
+            $stmtEvento->bind_param("i", $idEvento);
+            $stmtEvento->execute();
+            $stmtEvento->close();
+    
+            // Se tudo correu bem, confirmar a transação
+            $conn->commit();
+    
+            return "Evento e seus cursos associados foram excluídos com sucesso.";
+        } catch (Exception $e) {
+            // Em caso de erro, desfazer a transação
+            $conn->rollback();
+    
+            return "Erro ao excluir o evento: " . $e->getMessage();
+        } finally {
+            // Fechar a conexão
+            $conn->close();
+        }
+    }
+    
+    
+    
+    
     function gerarRelatorios(){}
     function gerenciarRanking(){}
     

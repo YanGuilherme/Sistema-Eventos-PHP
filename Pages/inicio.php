@@ -11,6 +11,12 @@ ini_set('display_errors', 1);
 
 session_start(); // Inicia a sessão
 
+
+if (isset($_SESSION['mensagem'])) {
+    echo "<p>{$_SESSION['mensagem']}</p>";
+    unset($_SESSION['mensagem']);
+}
+
 $usuarioLogado = isset($_SESSION['user']) && is_array($_SESSION['user']);
 $tipoUsuario = $usuarioLogado ? $_SESSION['user']['tipo'] : '';
 
@@ -84,7 +90,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                     <input type="hidden" name="id_evento" value="<?php echo htmlspecialchars($evento->getId()); ?>">
                     <button type="submit">Editar evento</button>
                 </form><br>
-                <form action="../Service/excluir_evento" method="post">
+                <form action="../Service/excluir_evento.php" method="post">
                     <input type="hidden" name="id_evento" value="<?php echo htmlspecialchars($evento->getId()); ?>">
                     <button type="submit">Excluir evento</button>
                 </form>
@@ -106,7 +112,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                                         <input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($curso->getId()); ?>">
                                         <button type="submit">Editar curso</button>
                                     </form><br>
-                                    <form action="../Service/excluir_curso" method="post">
+                                    <form action="../Service/excluir_curso.php" method="post">
                                         <input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($curso->getId()); ?>">
                                         <button type="submit">Excluir curso</button>
                                     </form>
