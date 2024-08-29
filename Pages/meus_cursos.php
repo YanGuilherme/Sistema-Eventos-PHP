@@ -27,12 +27,12 @@ $cursosUsuario = Curso::listarCursosUsuario($user_id);
         <?php if ($usuarioLogado): ?>
             <a href="eventos_user.php">Meus eventos</a>
             <a href="ranking.php">Ranking de Participação</a> <!-- Aba para Ranking -->
-
             <a href="./perfil.php">Perfil</a>
             <a href="?action=logout">Deslogar</a>
             
             <?php if ($tipoUsuario === 'administrador'): ?>
                 <a href="./dashboard_adm.php">Dashboard Admin</a>
+                <a href="relatorios.php">Relatórios</a>
                 <a href="curso_concluido.php?curso_id=1">Marcar Conclusão de Curso</a>
 
             <?php endif; ?>

@@ -191,6 +191,29 @@ class Usuario {
         return $alunos;
     }
 
+    public static function listarTodosUsuarios() {
+        $conn = getConnection();
+        $sql = "SELECT * FROM usuarios";
+        $result = $conn->query($sql);
+        
+        $usuarios = [];
+        while ($row = $result->fetch_assoc()) {
+            $usuarios[] = new Usuario(
+                $row['id'],
+                $row['nome'],
+                $row['email'],
+                $row['matricula'],
+                $row['senha'],
+                $row['tipo'],
+                $row['pontos']
+            );
+        }
+    
+        $conn->close();
+        return $usuarios;
+    }
+    
+
     public function concluirCurso($curso_id) {
         $conn = getConnection();
 

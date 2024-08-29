@@ -81,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php if ($tipoUsuario === 'administrador'): ?>
                 <a href="dashboard_adm.php">Dashboard Admin</a>
+                <a href="relatorios.php">Relatórios</a>
                 <a href="curso_concluido.php?curso_id=1">Marcar Conclusão de Curso</a>
 
             <?php endif; ?>

@@ -14,10 +14,27 @@ if (isset($_SESSION['mensagem'])) {
     unset($_SESSION['mensagem']);
 }
 
-$usuarioLogado = isset($_SESSION['user']) && is_array($_SESSION['user']);
-$tipoUsuario = $usuarioLogado ? $_SESSION['user']['tipo'] : '';
+$usuarioLogado = isset($_SESSION['user']) && is_array($_SESSION['user']) ? $_SESSION['user'] : null;
+$tipoUsuario = $usuarioLogado ? $usuarioLogado['tipo'] : '';
 
-$eventos = Evento::listarEventos();
+$searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
+
+// Definindo a paginação
+$itemsPerPage = 4; // Número de cursos por página
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($page - 1) * $itemsPerPage;
+
+// Filtrar cursos pelo nome se houver uma pesquisa
+if ($searchQuery) {
+    $cursosFiltrados = Curso::pesquisarCursos($searchQuery, $offset, $itemsPerPage);
+    $totalCursos = Curso::contarCursosFiltrados($searchQuery);
+} else {
+    $cursosFiltrados = Curso::listarCursosPaginados($offset, $itemsPerPage);
+    $totalCursos = Curso::contarTodosCursos();
+}
+
+$totalPages = ceil($totalCursos / $itemsPerPage);
+
 function logout() {
     session_unset();
     session_destroy();
@@ -52,8 +69,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             <?php if ($tipoUsuario === 'administrador'): ?>
                 <a href="curso_concluido.php?curso_id=1">Marcar Conclusão de Curso</a>
                 <a href="dashboard_adm.php">Dashboard Admin</a>
+                <a href="relatorios.php">Relatórios</a>
+
             <?php endif; ?>
-            <a href="ranking.php">Ranking de Participação</a> <!-- Nova aba para Ranking -->
+            <a href="ranking.php">Ranking de Participação</a>
             <a href="perfil.php">Perfil</a>
             <a href="?action=logout">Deslogar</a>
         <?php else: ?>
@@ -61,70 +80,67 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             <a href="cadastro.php">Fazer cadastro</a>
         <?php endif; ?>
     </nav><br>
-    <input type="text" name="busca_evento" id="busca_evento" placeholder="Buscar por um evento">&nbsp;<button>Pesquisar</button>
-    
+
+    <!-- Barra de pesquisa -->
+    <form method="get" action="inicio.php">
+        <input type="text" name="search" id="search" placeholder="Buscar por um curso" value="<?php echo htmlspecialchars($searchQuery); ?>">
+        <button type="submit">Pesquisar</button>
+    </form>
+
     <article>
         <h2>Eventos e cursos</h2>
         <div class="wrapper">
             <?php
-            foreach ($eventos as $evento): 
-                // Listando cursos associados ao evento
-                $cursos = Curso::listarCursosPorEvento($evento->getId());
+            if (!empty($cursosFiltrados) && is_array($cursosFiltrados)) {
+                foreach ($cursosFiltrados as $curso): 
             ?>
-                <div class="evento">
-                    <h3><?php echo htmlspecialchars($evento->getTitulo()); ?></h3>
-                    <p><strong style="word-break: break-word;">Descrição:</strong> <?php echo htmlspecialchars($evento->getDescricao()); ?></p>
-                    <p><strong>Data de Início:</strong> <?php echo htmlspecialchars($evento->getDataInicio()); ?></p>
-                    <p><strong>Data de Fim:</strong> <?php echo htmlspecialchars($evento->getDataFim()); ?></p>
-                    <?php if($tipoUsuario === 'administrador'):?>
-                    <form action="./editar_evento.php" method="post">
-                        <input type="hidden" name="id_evento" value="<?php echo htmlspecialchars($evento->getId()); ?>">
-                        <button type="submit">Editar evento</button>
-                    </form><br>
-                    <form action="../Service/excluir_evento.php" method="post">
-                        <input type="hidden" name="id_evento" value="<?php echo htmlspecialchars($evento->getId()); ?>">
-                        <button type="submit">Excluir evento</button>
-                    </form>
-                    <?php endif; ?>
-                        
-                    <!-- Listando cursos relacionados ao evento -->
-                    <?php if (!empty($cursos)): ?>
-                        <h4>Cursos:</h4>
-                        <div class="cursos">
-                            <?php foreach ($cursos as $curso): ?>
-                                <div class="curso">
-                                    <h5><?php echo htmlspecialchars($curso->getTitulo()); ?></h5>
-                                    <p><strong>Descrição:</strong> <?php echo htmlspecialchars($curso->getDescricao()); ?></p>
-                                    <p><strong>Data:</strong> <?php echo htmlspecialchars($curso->getData()); ?></p>
-                                    <p><strong>Horário:</strong> <?php echo htmlspecialchars($curso->getHorario()); ?></p>
-                                    <?php if($tipoUsuario === 'administrador'):?>
-                                        <form action="./editar_curso.php" method="post">
-                                            <input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($curso->getId()); ?>">
-                                            <button type="submit">Editar curso</button>
-                                        </form><br>
-                                        <form action="../Service/excluir_curso.php" method="post">
-                                            <input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($curso->getId()); ?>">
-                                            <button type="submit">Excluir curso</button>
-                                        </form>
-
-                                        <?php else: ?>
-                                            <form action="./inscricao.php" method="post">
-                                            <input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($curso->getId()); ?>">
-                                            <input type="hidden" name="id_user" value="<?php echo htmlspecialchars($_SESSION['user']['id']); ?>">
-                                            <button type="submit">Inscrever-se no curso</button>
-                                        </form>
-
-                                    <?php endif; ?>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
+                <div class="curso">
+                    <h3><?php echo htmlspecialchars($curso->getTitulo()); ?></h3>
+                    <p><strong>Descrição:</strong> <?php echo htmlspecialchars($curso->getDescricao()); ?></p>
+                    <p><strong>Data:</strong> <?php echo htmlspecialchars($curso->getData()); ?></p>
+                    <p><strong>Horário:</strong> <?php echo htmlspecialchars($curso->getHorario()); ?></p>
+                    <?php if($tipoUsuario === 'administrador'): ?>
+                        <form action="./editar_curso.php" method="post">
+                            <input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($curso->getId()); ?>">
+                            <button type="submit">Editar curso</button>
+                        </form><br>
+                        <form action="../Service/excluir_curso.php" method="post">
+                            <input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($curso->getId()); ?>">
+                            <button type="submit">Excluir curso</button>
+                        </form>
                     <?php else: ?>
-                        <p>Nenhum curso disponível para este evento.</p>
+                        <form action="./inscricao.php" method="post">
+                            <input type="hidden" name="id_curso" value="<?php echo htmlspecialchars($curso->getId()); ?>">
+                            <input type="hidden" name="id_user" value="<?php echo htmlspecialchars($_SESSION['user']['id']); ?>">
+                            <button type="submit">Inscrever-se no curso</button>
+                        </form>
                     <?php endif; ?>
                 </div>
-            <?php endforeach; ?>
+            <?php 
+                endforeach;
+            } else {
+                echo "<p>Nenhum curso encontrado.</p>";
+            }
+            ?>
         </div>
     </article>
+
+    <!-- Paginação -->
+    <?php if ($totalPages > 1): ?>
+        <div class="pagination">
+            <?php if ($page > 1): ?>
+                <a href="?page=<?php echo $page - 1; ?>&search=<?php echo urlencode($searchQuery); ?>">Anterior</a>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="?page=<?php echo $i; ?>&search=<?php echo urlencode($searchQuery); ?>" <?php if ($i == $page) echo 'class="active"'; ?>><?php echo $i; ?></a>
+            <?php endfor; ?>
+
+            <?php if ($page < $totalPages): ?>
+                <a href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($searchQuery); ?>">Próximo</a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 
     <footer><p>Projeto prático SIN 132</p></footer>
 </body>

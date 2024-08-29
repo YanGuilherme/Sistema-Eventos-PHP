@@ -1,57 +1,68 @@
 .evento {
-    text-align: center;
-    background-color: azure;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 8px;
-    margin-bottom: 10px; /* Adicionei um espaçamento entre os eventos */
-    flex-wrap: wrap;
-    
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 350px;
 }
 
-input{
-    font-size: large;
+input {
+    font-size: 16px;
     width: 100%;
-    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
-.wrapper{
+.wrapper {
     display: flex;
-    justify-content: space-evenly;
-    margin: 5px;
+    justify-content: space-between;
     flex-wrap: wrap;
+    gap: 20px;
 }
 
 .evento h3 {
-    font-size: larger;
-    background-color: rgb(214, 236, 255);
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
 }
 
 .cursos {
     display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha, se necessário */
+    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 20px;
     width: 100%;
-    max-width: 1200px;
 }
 
 .curso {
-    background-color: rgb(220, 198, 255);
-    padding: 8px;
-    border: 1px solid black;
-    border-radius: 5px;
-    flex: 1 1 calc(33.33% - 40px); /* Define a largura dos cards e permite ajuste */
-    box-sizing: border-box; /* Garante que o padding e border sejam incluídos na largura */
-    max-width: 300px; /* Define um limite máximo para a largura dos cards */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    flex: 1 1 calc(33.33% - 40px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
 }
 
 h2 {
-    font-size: 20pt;
+    font-size: 24px;
     text-align: center;
-    background-color: #ccc;
+    background-color: #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    color: #444;
+    margin-bottom: 20px;
 }
 
-h4{
-    background-color: rgb(214, 255, 217);
+h4 {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: #555;
 }

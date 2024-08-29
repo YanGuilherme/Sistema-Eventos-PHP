@@ -46,6 +46,7 @@ $eventos = Administrador::obterEventos();
     <nav>
         <a href="./inicio.php">Início</a>
         <a href="dashboard_adm.php">Dashboard Admin</a>
+        <a href="relatorios.php">Relatórios</a>
         <a href="perfil.php">Perfil</a>
         <a href="?action=logout">Deslogar</a>
     </nav>

@@ -51,6 +51,7 @@ $eventos = Evento::listarEventos();
 
         <?php if ($_SESSION['user']['tipo'] === 'administrador'): ?>
             <a href="dashboard_adm.php">Dashboard Admin</a>
+            <a href="relatorios.php">Relatórios</a>
             <a href="curso_concluido.php">Gerenciar conclusão cursos</a>
         <?php endif; ?>
         <a href="perfil.php">Perfil</a>
@@ -65,7 +66,7 @@ $eventos = Evento::listarEventos();
     <?php endif; ?>
 
     <?php foreach ($eventos as $evento): ?>
-        <h2><?php echo htmlspecialchars($evento->getTitulo()); ?></h2>
+        <div class="titulo-evento-curso"><?php echo htmlspecialchars($evento->getTitulo()); ?></div>
         <p><?php echo htmlspecialchars($evento->getDescricao()); ?></p>
         <p><strong>Data de Início:</strong> <?php echo htmlspecialchars($evento->getDataInicio()); ?></p>
         <p><strong>Data de Fim:</strong> <?php echo htmlspecialchars($evento->getDataFim()); ?></p>
@@ -75,7 +76,7 @@ $eventos = Evento::listarEventos();
         foreach ($cursos as $curso):
             $alunosInscritos = Usuario::listarAlunosPorCurso($curso->getId());
         ?>
-            <h3><?php echo htmlspecialchars($curso->getTitulo()); ?></h3>
+            <div class="titulo-evento-curso"><?php echo htmlspecialchars($curso->getTitulo()); ?></div>
             <table>
                 <thead>
                     <tr>
