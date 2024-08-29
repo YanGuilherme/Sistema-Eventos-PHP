@@ -9,7 +9,6 @@ class Evento {
     private $dataInicio;
     private $dataFim;
 
-    // Construtor da classe
     public function __construct($id = null, $titulo = '', $descricao = '', $dataInicio = '', $dataFim = '') {
         $this->id = $id;
         $this->titulo = $titulo;
@@ -18,7 +17,6 @@ class Evento {
         $this->dataFim = $dataFim;
     }
 
-    // Getters e Setters
     public function getId() {
         return $this->id;
     }
@@ -59,7 +57,6 @@ class Evento {
         $this->dataFim = $dataFim;
     }
 
-    // Função para listar todos os eventos
     public static function listarEventos() {
         $conn = getConnection();
         $eventos = [];
@@ -86,7 +83,6 @@ class Evento {
         return $eventos;
     }
 
-    // Função para buscar um evento por ID
     public static function buscarEventoById($id) {
         $conn = getConnection();
         $sql = "SELECT * FROM eventos WHERE id = ?";
@@ -97,7 +93,6 @@ class Evento {
         return $result->fetch_object();
     }
 
-    // Função para listar eventos nos quais o usuário está inscrito
     public static function listarEventosUsuario($user_id) {
         $conn = getConnection();
         $eventos = [];

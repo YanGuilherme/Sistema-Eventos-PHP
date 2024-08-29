@@ -8,7 +8,6 @@ include '../Classes/Usuario.php';
 $usuarioLogado = isset($_SESSION['user']) && is_array($_SESSION['user']);
 $tipoUsuario = $usuarioLogado ? $_SESSION['user']['tipo'] : '';
 
-// Função de logout
 function logout() {
     session_unset();
     session_destroy();
@@ -16,7 +15,6 @@ function logout() {
     exit();
 }
 
-// Se a ação de logout for solicitada
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     logout();
 }
@@ -24,7 +22,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 $errorMessage = '';
 $matricula = $tipoUsuario = $nome = $email = '';
 
-// Se o usuário estiver logado, recupera os dados do usuário
 if ($usuarioLogado) {
     $idUsuario = $_SESSION['user']['id'] ?? null;
     $matricula = $_SESSION['user']['matricula'] ?? '';
@@ -77,6 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <nav>
         <a href="inicio.php">Inicio</a>
+        <a href="sobre.php"> Sobre</a>
+
         <?php if ($usuarioLogado): ?>
             <?php if ($tipoUsuario === 'aluno'): ?>
                 <a href="eventos_user.php">Meus eventos</a>

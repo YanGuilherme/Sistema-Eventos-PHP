@@ -8,7 +8,6 @@ class Curso {
     private $horario;
     private $eventoId; // foreign key
 
-    // Construtor da classe
     public function __construct($id = null, $titulo = '', $descricao = '', $data = '', $horario = '', $eventoId = null) {
         $this->id = $id;
         $this->titulo = $titulo;
@@ -18,7 +17,6 @@ class Curso {
         $this->eventoId = $eventoId;
     }
 
-    // Getters e Setters
     public function getId() {
         return $this->id;
     }
@@ -67,7 +65,6 @@ class Curso {
         $this->eventoId = $eventoId;
     }
 
-    // Listar cursos por evento
     public static function listarCursosPorEvento($eventoId) {
         $conn = getConnection();
         $cursos = [];
@@ -97,7 +94,6 @@ class Curso {
         return $cursos;
     }
 
-    // Listar cursos nos quais o usuário está inscrito
     public static function listarCursosUsuario($user_id) {
         $conn = getConnection();
         $cursos = [];
@@ -134,7 +130,6 @@ class Curso {
         }
     }
 
-    // Buscar curso por ID
     public static function buscarCursoById($id) {
         $conn = getConnection();
         $sql = "SELECT * FROM cursos WHERE id = ?";
@@ -173,11 +168,9 @@ class Curso {
     }
 
 
-    // Marcar curso como concluído e adicionar pontos ao aluno
     public static function concluirCurso($user_id, $curso_id) {
         $conn = getConnection();
 
-        // Verificar se o curso já foi concluído
         $sqlCheck = "SELECT status FROM inscricoes WHERE usuario_id = ? AND curso_id = ?";
         $stmtCheck = $conn->prepare($sqlCheck);
         $stmtCheck->bind_param("ii", $user_id, $curso_id);
@@ -193,7 +186,6 @@ class Curso {
 
         $stmtCheck->close();
 
-        // Marcar o curso como concluído e adicionar os pontos ao usuário
         $sqlUpdate = "UPDATE inscricoes SET status = 'concluido' WHERE usuario_id = ? AND curso_id = ?";
         $stmtUpdate = $conn->prepare($sqlUpdate);
         $stmtUpdate->bind_param("ii", $user_id, $curso_id);
@@ -286,7 +278,6 @@ class Curso {
     }
     
 
-    function verificarConflitoHorario() {}
 }
 
 

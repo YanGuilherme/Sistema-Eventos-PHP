@@ -31,6 +31,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     
     <nav>
         <a href="./inicio.php">Inicio</a>
+        <a href="sobre.php"> Sobre</a>
+
         <?php if ($usuarioLogado): ?>
             <a href="eventos_user.php">Meus eventos</a>
             <a href="ranking.php">Ranking de Participação</a> <!-- Aba para Ranking -->

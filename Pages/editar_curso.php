@@ -74,6 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <nav>
         <a href="inicio.php">Inicio</a>
+        <a href="sobre.php"> Sobre</a>
+
         <?php if ($usuarioLogado): ?>
             <?php if ($tipoUsuario === 'aluno'): ?>
                 <a href="eventos_user.php">Meus eventos</a>

@@ -6,7 +6,6 @@ $usuarioLogado = isset($_SESSION['user']) && is_array($_SESSION['user']);
 
 $matricula = $tipoUsuario = $nome = $email =   '';
 
-// Se o usuário estiver logado, recupera a matrícula
 if ($usuarioLogado) {
     $matricula = $_SESSION['user']['matricula'];
     $tipoUsuario = $_SESSION['user']['tipo'];
@@ -45,6 +44,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     ?>
         
         <nav><a href="./inicio.php">Inicio</a>
+        <a href="sobre.php"> Sobre</a>
+
             <?php if ($tipoUsuario === 'aluno'): ?>
                 <a href="eventos_user.php">Meus eventos</a>
             <?php endif; ?>

@@ -55,23 +55,19 @@ class Inscricao {
     public static function verificarConflitoHorario($cursoId, $usuarioId) {
         $conn = getConnection();
         
-        // Consulta para obter o horário do curso
         $sql = "SELECT data, horario FROM cursos WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $cursoId);
         $stmt->execute();
         $resultadoCurso = $stmt->get_result();
         
-        // Extrair os dados do curso
         if ($curso = $resultadoCurso->fetch_assoc()) {
             $dataCurso = $curso['data'];
             $horarioCurso = $curso['horario'];
         } else {
-            // Se não houver curso com o ID fornecido, retorna false
             return false;
         }
     
-        // Consulta para obter os horários já inscritos do usuário
         $sql = "SELECT data, horario FROM inscricoes i 
                 JOIN cursos c ON i.curso_id = c.id 
                 WHERE i.usuario_id = ?";
@@ -80,12 +76,10 @@ class Inscricao {
         $stmt->execute();
         $resultadoInscricoes = $stmt->get_result();
         
-        // Verificar conflito de horários
         while ($inscricao = $resultadoInscricoes->fetch_assoc()) {
             $dataInscricao = $inscricao['data'];
             $horarioInscricao = $inscricao['horario'];
             
-            // Verifica se a data e o horário coincidem
             if ($dataCurso == $dataInscricao && $horarioCurso == $horarioInscricao) {
                 return false; // Conflito de horário encontrado
             }

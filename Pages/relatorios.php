@@ -42,6 +42,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <header><h1>Relatórios do Sistema</h1></header>
     <nav>
         <a href="inicio.php">Inicio</a>
+        <a href="sobre.php"> Sobre</a>
+
         <a href="dashboard_adm.php">Dashboard Admin</a>
         <a href="?action=logout">Deslogar</a>
     </nav>

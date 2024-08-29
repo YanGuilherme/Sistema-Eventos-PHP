@@ -5,7 +5,7 @@ require_once '../Classes/Administrador.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-session_start(); // Inicia a sessão
+session_start(); 
 $usuarioLogado = isset($_SESSION['user']) && is_array($_SESSION['user']);
 $tipoUsuario = $usuarioLogado ? $_SESSION['user']['tipo'] : '';
 
@@ -16,12 +16,10 @@ function logout() {
     exit();
 }
 
-// Se a ação de logout for solicitada
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     logout();
 }
 
-// Verifica se o usuário é administrador
 if (!$usuarioLogado || $tipoUsuario !== 'administrador') {
     echo "Acesso negado.";
     exit();
@@ -45,6 +43,7 @@ $eventos = Administrador::obterEventos();
 
     <nav>
         <a href="./inicio.php">Início</a>
+        <a href="sobre.php"> Sobre</a>
         <a href="dashboard_adm.php">Dashboard Admin</a>
         <a href="relatorios.php">Relatórios</a>
         <a href="perfil.php">Perfil</a>

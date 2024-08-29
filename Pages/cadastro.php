@@ -17,25 +17,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     // Validação do email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errorMessage .= 'O e-mail informado não é válido.<br>';
+        $errorMessage .= 'O e-mail informado não é válido.<br><br>';
     }
 
     // Validação do nome (apenas letras e espaços)
     if (!preg_match("/^[a-zA-ZÀ-ÿ\s]+$/", $nome)) {
-        $errorMessage .= 'O nome deve conter apenas letras e espaços.<br>';
+        $errorMessage .= 'O nome deve conter apenas letras e espaços.<br><br>';
     }
 
     // Validação da matrícula (apenas números)
     if (!preg_match("/^[0-9]+$/", $matricula)) {
-        $errorMessage .= 'A matrícula deve conter apenas números.<br>';
+        $errorMessage .= 'A matrícula deve conter apenas números.<br><br>';
     }
 
-    // Validação da senha (mínimo de 8 caracteres, incluindo letra maiúscula, minúscula, número e caractere especial)
-    if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $senha)) {
-        $errorMessage .= 'A senha deve ter no mínimo 8 caracteres, incluindo uma letra maiúscula, uma letra minúscula, um número e um caractere especial.<br>';
-    }
 
-    // Se não houver erros, prossegue com o cadastro
     if (empty($errorMessage)) {
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
         $tipo = 'aluno';
@@ -66,7 +61,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <form action="cadastro.php" method="post">
         <?php if (!empty($errorMessage)): ?>
             <p class="error">
-                <?php echo htmlspecialchars($errorMessage); ?>
+                <?php echo ($errorMessage);?>
             </p>
         <?php endif; ?>
         <p>Email</p>

@@ -9,7 +9,6 @@ include '../Classes/Administrador.php';
 $usuarioLogado = isset($_SESSION['user']) && is_array($_SESSION['user']);
 $tipoUsuario = $usuarioLogado ? $_SESSION['user']['tipo'] : '';
 
-// Função de logout
 function logout() {
     session_unset();
     session_destroy();
@@ -17,7 +16,6 @@ function logout() {
     exit();
 }
 
-// Se a ação de logout for solicitada
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     logout();
 }
@@ -28,19 +26,16 @@ $dadosEvento = null;
 $idEvento = isset($_POST['id_evento']) ? $_POST['id_evento'] : null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Se o ID do evento for passado via POST, buscar os dados do evento
     if ($idEvento) {
         $dadosEvento = Evento::buscarEventoById($idEvento);
     }
 
-    // Se o formulário foi enviado para salvar a edição
     if (isset($_POST['titulo']) && isset($_POST['descricao']) && isset($_POST['data_inicio']) && isset($_POST['data_fim'])) {
         $titulo = $_POST['titulo'];
         $descricao = $_POST['descricao'];
         $dataInicio = $_POST['data_inicio'];
         $dataFim = $_POST['data_fim'];
 
-        // Atualizar o evento no banco de dados
         $resultado = Administrador::editarEvento($idEvento, $titulo, $descricao, $dataInicio, $dataFim);
 
         if ($resultado) {
@@ -74,6 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <nav>
         <a href="inicio.php">Inicio</a>
+        <a href="sobre.php"> Sobre</a>
+
         <?php if ($usuarioLogado): ?>
             <?php if ($tipoUsuario === 'aluno'): ?>
                 <a href="eventos_user.php">Meus eventos</a>

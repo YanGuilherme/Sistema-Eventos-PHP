@@ -22,6 +22,8 @@ $eventosUsuario = Evento::listarEventosUsuario($user_id);
     <header><h1>Meus Eventos</h1></header>
     <nav>
         <a href="inicio.php">Inicio</a>
+        <a href="sobre.php"> Sobre</a>
+
         <?php if ($usuarioLogado): ?>
             <a href="eventos_user.php">Meus eventos</a>
             <a href="ranking.php">Ranking de Participação</a>

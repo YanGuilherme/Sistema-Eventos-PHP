@@ -23,12 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user = Usuario::autenticar($email, $senha);
 
             if ($user) {
-                // Supondo que o método autenticar retorna um objeto Usuario
                 $_SESSION['user'] = [
                     'id' => $user->getId(),
                     'nome' => $user->getNome(),
                     'email' => $user->getEmail(),
-                    'matricula' => $user->getMatricula(), // Capturando a matrícula do usuário
+                    'matricula' => $user->getMatricula(), 
                     'tipo' => $user->getTipo(),
                 ];
                 header('Location: Pages/inicio.php');

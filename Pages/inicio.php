@@ -19,7 +19,6 @@ $tipoUsuario = $usuarioLogado ? $usuarioLogado['tipo'] : '';
 
 $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Definindo a paginação
 $itemsPerPage = 4; // Número de cursos por página
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $itemsPerPage;
@@ -42,7 +41,6 @@ function logout() {
     exit();
 }
 
-// Se a ação de logout for solicitada
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     logout();
 }
@@ -61,6 +59,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <header><h1>Gerenciador de Eventos</h1></header>
     <nav>
         <a href="inicio.php">Inicio</a>
+        <a href="sobre.php"> Sobre</a>
         <?php if ($usuarioLogado): ?>
             <?php if ($tipoUsuario === 'aluno'): ?>
                 <a href="eventos_user.php">Meus eventos</a>

@@ -12,7 +12,6 @@ if ($_SESSION['user']['tipo'] !== 'administrador') {
 
 $mensagem = '';
 
-// Lidar com a marcação de conclusão do curso
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $curso_id = isset($_POST['curso_id']) ? intval($_POST['curso_id']) : 0;
     $user_id = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
@@ -45,6 +44,8 @@ $eventos = Evento::listarEventos();
     
     <nav>
         <a href="inicio.php">Inicio</a>
+        <a href="sobre.php"> Sobre</a>
+
         <?php if ($_SESSION['user']['tipo'] === 'aluno'): ?>
             <a href="eventos_user.php">Meus eventos</a>
         <?php endif; ?>

@@ -13,7 +13,6 @@
     }
 
     $inscricao = new Inscricao(null, $idCurso, $idUser, $dataInscricao);
-    // $inscricao::verificarConflitoHorario($idCurso,$idUser);
     $resultado = $inscricao::inscrever($idCurso, $idUser, $dataInscricao);
 
     if ($resultado) {

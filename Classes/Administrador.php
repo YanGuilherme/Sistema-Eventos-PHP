@@ -15,7 +15,6 @@ class Administrador{
         $sql = "INSERT INTO eventos (titulo, descricao, data_inicio, data_fim) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
     
-        // Use os getters do objeto Evento
         $stmt->bind_param("ssss", 
             $evento->getTitulo(), 
             $evento->getDescricao(), 
@@ -91,7 +90,6 @@ class Administrador{
     
         $stmt->close();
     
-        // Atualiza os dados do usuário
         $sql = "UPDATE eventos SET titulo = ?, descricao = ?, data_inicio = ?, data_fim = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssssi", $titulo, $descricao,$dataInicio,$dataFim, $idEvento);
@@ -116,7 +114,6 @@ class Administrador{
         }
         $conn = getConnection();
     
-        // Verifica se o curso existe
         $sql = "SELECT * FROM cursos WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $cursoId);
@@ -131,7 +128,6 @@ class Administrador{
     
         $stmt->close();
     
-        // Atualiza os dados do curso
         $sql = "UPDATE cursos SET evento_id = ?, titulo = ?, descricao = ?, data = ?, horario = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("issssi", $eventoId, $titulo, $descricao, $data, $horario, $cursoId);
@@ -162,43 +158,31 @@ class Administrador{
         // Conexão com o banco de dados
         $conn = getConnection();
         
-        // Iniciar uma transação para garantir que ambas as operações ocorram ou nenhuma
         $conn->begin_transaction();
     
         try {
-            // Excluir os cursos associados ao evento
             $sqlCursos = "DELETE FROM cursos WHERE evento_id = ?";
             $stmtCursos = $conn->prepare($sqlCursos);
             $stmtCursos->bind_param("i", $idEvento);
             $stmtCursos->execute();
             $stmtCursos->close();
     
-            // Excluir o evento
             $sqlEvento = "DELETE FROM eventos WHERE id = ?";
             $stmtEvento = $conn->prepare($sqlEvento);
             $stmtEvento->bind_param("i", $idEvento);
             $stmtEvento->execute();
             $stmtEvento->close();
     
-            // Se tudo correu bem, confirmar a transação
             $conn->commit();
     
             return "Evento e seus cursos associados foram excluídos com sucesso.";
         } catch (Exception $e) {
-            // Em caso de erro, desfazer a transação
             $conn->rollback();
     
             return "Erro ao excluir o evento: " . $e->getMessage();
         } finally {
-            // Fechar a conexão
             $conn->close();
         }
     }
-    
-    
-    
-    
-    function gerarRelatorios(){}
-    function gerenciarRanking(){}
-    
+
 }

@@ -3,7 +3,6 @@ require_once('../Classes/Curso.php');
 require_once('../Classes/Usuario.php');
 session_start();
 
-// Definindo as variáveis $usuarioLogado e $tipoUsuario
 $usuarioLogado = isset($_SESSION['user']) && is_array($_SESSION['user']);
 $tipoUsuario = $usuarioLogado ? $_SESSION['user']['tipo'] : '';
 
@@ -24,6 +23,8 @@ $cursosUsuario = Curso::listarCursosUsuario($user_id);
 
     <nav>
         <a href="./inicio.php">Inicio</a>
+        <a href="sobre.php"> Sobre</a>
+
         <?php if ($usuarioLogado): ?>
             <a href="eventos_user.php">Meus eventos</a>
             <a href="ranking.php">Ranking de Participação</a> <!-- Aba para Ranking -->

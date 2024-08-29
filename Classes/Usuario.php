@@ -64,7 +64,7 @@ class Usuario {
                 $user['id'],
                 $user['nome'],
                 $user['email'],
-                $user['matricula'],  // Capturando a matrícula corretamente
+                $user['matricula'], 
                 $user['senha'],
                 $user['tipo'],
                 $user['pontos']
@@ -88,7 +88,7 @@ class Usuario {
                 $row['id'],
                 $row['nome'],
                 $row['email'],
-                $row['matricula'],  // Capturando a matrícula corretamente
+                $row['matricula'], 
                 '',
                 $row['tipo'],
                 $row['pontos']
@@ -217,7 +217,6 @@ class Usuario {
     public function concluirCurso($curso_id) {
         $conn = getConnection();
 
-        // Verificar se o curso já foi concluído
         $sqlCheck = "SELECT status FROM inscricoes WHERE usuario_id = ? AND curso_id = ?";
         $stmtCheck = $conn->prepare($sqlCheck);
         $stmtCheck->bind_param("ii", $this->id, $curso_id);
@@ -233,7 +232,6 @@ class Usuario {
 
         $stmtCheck->close();
 
-        // Marcar o curso como concluído e adicionar os pontos ao usuário
         $sqlUpdate = "UPDATE inscricoes SET status = 'concluido' WHERE usuario_id = ? AND curso_id = ?";
         $stmtUpdate = $conn->prepare($sqlUpdate);
         $stmtUpdate->bind_param("ii", $this->id, $curso_id);
