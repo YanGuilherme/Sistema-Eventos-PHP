@@ -1,22 +1,3 @@
-<!--
-    FEITO
-        -Modelagem das classes e do banco
-        -  ## Fazer uma homepage com todos os eventos disponiveis e links para iniciar sessao
-        -  ## Fazer login e cadastro funcionar
-        -  ## Mudar para php para alternar botoes do nav
-        -  ## Mudar todo o fluxo de paginas para login -> e entao depois pagina principal com acessos
-        -  ## Pensar sobre as permissoes de cada tipo de usuario (definir classe adkmin para cadastrar eventos)
-
-
-
-
-    PARA FAZER - 
-        - 14/08 ## Eventos funcionando e edicao de dados de usuario e de eventos
-
-
--->
-
-
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -42,14 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user = Usuario::autenticar($email, $senha);
 
             if ($user) {
-                // Supondo que o método autenticar retorna um array associativo ou um objeto
-                $_SESSION['user'] = array(
-                    'id' => $user['id'],
-                    'nome' => $user['nome'],
-                    'email' => $user['email'],
-                    'tipo' => $user['tipo'],
-                    'matricula' => $user['matricula']
-                );
+                // Supondo que o método autenticar retorna um objeto Usuario
+                $_SESSION['user'] = [
+                    'id' => $user->getId(),
+                    'nome' => $user->getNome(),
+                    'email' => $user->getEmail(),
+                    'matricula' => $user->getMatricula(), // Capturando a matrícula do usuário
+                    'tipo' => $user->getTipo(),
+                ];
                 header('Location: Pages/inicio.php');
                 exit();
             } else {
@@ -91,4 +72,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <footer><p>Projeto prático SIN 132</p></footer>
 </body>
 </html>
-

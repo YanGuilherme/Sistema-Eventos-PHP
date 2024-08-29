@@ -1,58 +1,14 @@
-<?php 
+<?php
 
-class Curso{
+class Curso {
     private $id;
     private $titulo;
     private $descricao;
     private $data;
     private $horario;
-    private $eventoId; #foreign key
+    private $eventoId; // foreign key
 
-
-
-    public static function listarCursosPorEvento($eventoId) {
-        $conn = getConnection();
-        $cursos = [];
-
-        $sql = "SELECT * FROM cursos WHERE evento_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $eventoId);
-
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        while ($row = $result->fetch_assoc()) {
-            $curso = new Curso(
-                $row['id'],
-                $row['titulo'],
-                $row['descricao'],
-                $row['data'],
-                $row['horario'],
-                $row['evento_id']
-            );
-            $cursos[] = $curso;
-        }
-
-        $stmt->close();
-        $conn->close();
-
-        return $cursos;
-    }
-
-
-    public static function buscarCursoById($id){
-        $conn = getConnection();
-        $sql = "SELECT * FROM cursos WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_object();
-        
-    }
-    function verificarConflitoHorario(){}
-
-        // Construtor da classe
+    // Construtor da classe
     public function __construct($id = null, $titulo = '', $descricao = '', $data = '', $horario = '', $eventoId = null) {
         $this->id = $id;
         $this->titulo = $titulo;
@@ -62,6 +18,7 @@ class Curso{
         $this->eventoId = $eventoId;
     }
 
+    // Getters e Setters
     public function getId() {
         return $this->id;
     }
@@ -109,5 +66,123 @@ class Curso{
     public function setEventoId($eventoId) {
         $this->eventoId = $eventoId;
     }
+
+    // Listar cursos por evento
+    public static function listarCursosPorEvento($eventoId) {
+        $conn = getConnection();
+        $cursos = [];
+
+        $sql = "SELECT * FROM cursos WHERE evento_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $eventoId);
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $curso = new Curso(
+                $row['id'],
+                $row['titulo'],
+                $row['descricao'],
+                $row['data'],
+                $row['horario'],
+                $row['evento_id']
+            );
+            $cursos[] = $curso;
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $cursos;
+    }
+
+    // Listar cursos nos quais o usuário está inscrito
+    public static function listarCursosUsuario($user_id) {
+        $conn = getConnection();
+        $cursos = [];
     
+        $sql = "SELECT c.* FROM cursos c 
+                INNER JOIN inscricoes i ON c.id = i.curso_id 
+                WHERE i.usuario_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+    
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+    
+            while ($row = $result->fetch_assoc()) {
+                $curso = new Curso(
+                    $row['id'],
+                    $row['titulo'],
+                    $row['descricao'],
+                    $row['data'],
+                    $row['horario'],
+                    $row['evento_id']
+                );
+                $cursos[] = $curso;
+            }
+    
+            $stmt->close();
+            $conn->close();
+    
+            return $cursos;
+        } else {
+            $stmt->close();
+            $conn->close();
+            return [];
+        }
+    }
+
+    // Buscar curso por ID
+    public static function buscarCursoById($id) {
+        $conn = getConnection();
+        $sql = "SELECT * FROM cursos WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_object();
+    }
+
+    // Marcar curso como concluído e adicionar pontos ao aluno
+    public static function concluirCurso($user_id, $curso_id) {
+        $conn = getConnection();
+
+        // Verificar se o curso já foi concluído
+        $sqlCheck = "SELECT status FROM inscricoes WHERE usuario_id = ? AND curso_id = ?";
+        $stmtCheck = $conn->prepare($sqlCheck);
+        $stmtCheck->bind_param("ii", $user_id, $curso_id);
+        $stmtCheck->execute();
+        $resultCheck = $stmtCheck->get_result();
+        $row = $resultCheck->fetch_assoc();
+
+        if ($row && $row['status'] === 'concluido') {
+            $stmtCheck->close();
+            $conn->close();
+            return "Este curso já foi concluído por este aluno.";
+        }
+
+        $stmtCheck->close();
+
+        // Marcar o curso como concluído e adicionar os pontos ao usuário
+        $sqlUpdate = "UPDATE inscricoes SET status = 'concluido' WHERE usuario_id = ? AND curso_id = ?";
+        $stmtUpdate = $conn->prepare($sqlUpdate);
+        $stmtUpdate->bind_param("ii", $user_id, $curso_id);
+
+        if ($stmtUpdate->execute()) {
+            $sqlUpdatePoints = "UPDATE usuarios SET pontos = pontos + 10 WHERE id = ?";
+            $stmtPoints = $conn->prepare($sqlUpdatePoints);
+            $stmtPoints->bind_param("i", $user_id);
+            $stmtPoints->execute();
+            $stmtPoints->close();
+        }
+
+        $stmtUpdate->close();
+        $conn->close();
+
+        return "Curso concluído e pontos atribuídos ao aluno.";
+    }
+
+    function verificarConflitoHorario() {}
 }

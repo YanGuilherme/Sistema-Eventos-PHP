@@ -31,10 +31,7 @@ if ($usuarioLogado) {
     $tipoUsuario = $_SESSION['user']['tipo'] ?? '';
     $nome = $_SESSION['user']['nome'] ?? '';
     $email = $_SESSION['user']['email'] ?? '';
-
 }
-
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $idUsuario = $_POST['id'] ?? null;
@@ -42,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'] ?? '';
     $senha = $_POST['senha'] ?? '';
 
-    
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
     $user = new Usuario($idUsuario, $nome, $email, $matricula, $senhaHash, $tipoUsuario);
@@ -56,11 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Recarrega os dados atualizados
         $user = Usuario::getUserById($idUsuario); // Supondo que você tenha um método para obter o usuário por ID
         $_SESSION['user'] = array(
-            'id' => $user->id, 
-            'nome' => $user->nome,
-            'email' => $user->email,
-            'tipo' => $user->tipo,
-            'matricula' => $user->matricula
+            'id' => $user->getId(), 
+            'nome' => $user->getNome(),
+            'email' => $user->getEmail(),
+            'tipo' => $user->getTipo(),
         );
 
         header('Location: perfil.php');
@@ -89,8 +84,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <?php if ($tipoUsuario === 'administrador'): ?>
                 <a href="dashboard_adm.php">Dashboard Admin</a>
+                <a href="curso_concluido.php">Gerenciar conclusão cursos</a>
             <?php endif; ?>
             <a href="perfil.php">Perfil</a>
+            <a href="ranking.php">Ranking de Participação</a>
             <a href="?action=logout">Deslogar</a>
         <?php else: ?>
             <a href="login.php">Logar</a>

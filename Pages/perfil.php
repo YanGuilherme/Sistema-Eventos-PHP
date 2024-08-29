@@ -40,7 +40,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <link rel="stylesheet" href="../CSS/estilo1.css">
 </head>
 <body>
-    <header><h1>Gerenciador de Eventos</h1></header>
+    <header><h1>Perfil</h1></header>
     <?php if($usuarioLogado)
     ?>
         
@@ -50,7 +50,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             <?php endif; ?>
             <?php if ($tipoUsuario === 'administrador'): ?>
                 <a href="dashboard_adm.php">Dashboard Admin</a>
+                <a href="curso_concluido.php?curso_id=1">Marcar Conclusão de Curso</a>
+
             <?php endif; ?>
+            <a href="ranking.php">Ranking de Participação</a>
             <a href="perfil.php">Perfil</a>
             <a href="?action=logout">Deslogar</a>
         </nav>
